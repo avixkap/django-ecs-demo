@@ -1,0 +1,44 @@
+{
+  "family": "djangotutorial",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::357323381626:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "djangotutorial",
+      "image": "357323381626.dkr.ecr.us-east-1.amazonaws.com/djangotutorial:latest",
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "DJANGO_DEBUG",
+          "value": "False"
+        },
+        {
+          "name": "DJANGO_ALLOWED_HOSTS",
+          "value": "*"
+        },
+        {
+          "name": "DJANGO_SECRET_KEY",
+          "value": ""
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/djangotutorial",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
